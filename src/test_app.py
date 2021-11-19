@@ -19,6 +19,7 @@ def escape_url(url):
 @pytest.fixture
 def client():
     importlib.reload(app)
+    app.init_locks()
     with app.app.test_client() as client:
         yield client
 

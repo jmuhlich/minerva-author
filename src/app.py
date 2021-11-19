@@ -1810,10 +1810,16 @@ def open_browser():
 
 G = reset_globals()
 
-if __name__ == "__main__":
 
+def init_locks():
+    global tiff_lock, mask_lock
     tiff_lock = multiprocessing.Lock()
     mask_lock = multiprocessing.Lock()
+
+
+if __name__ == "__main__":
+
+    init_locks()
     multiprocessing.freeze_support()
 
     atexit.register(close_tiff)
