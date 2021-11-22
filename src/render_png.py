@@ -73,7 +73,7 @@ def colorize_mask(target, image):
     return target
 
 
-def render_u32_tiles(mask_params, tile_size, logger):
+def render_u32_tiles(mask_params, logger):
     EXT = "png"
 
     opener = mask_params["opener"]
@@ -113,7 +113,7 @@ def render_u32_tiles(mask_params, tile_size, logger):
 
     for level in range(num_levels):
 
-        (nx, ny) = opener.get_level_tiles(level, tile_size)
+        (nx, ny) = opener.get_level_tiles(level)
         print("    level {} ({} x {})".format(level, ny, nx))
 
         for ty, tx in itertools.product(range(0, ny), range(0, nx)):
@@ -122,7 +122,7 @@ def render_u32_tiles(mask_params, tile_size, logger):
 
             try:
                 opener.save_mask_tiles(
-                    filename, mask_params, logger, tile_size, level, tx, ty
+                    filename, mask_params, logger, level, tx, ty
                 )
             except AttributeError as e:
                 logger.error(f"{level} ty {ty} tx {tx}: {e}")

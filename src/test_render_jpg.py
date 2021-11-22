@@ -26,7 +26,6 @@ def test_ome_tif_rendered_output():
     render_color_tiles(
         opener,
         output_dir="tmp",
-        tile_size=1024,
         config_rows=groups,
         logger=logger,
         progress_callback=None,

@@ -26,10 +26,10 @@ def composite_channel(target, image, color, range_min, range_max):
         target[:, :, i] += f_image * component
 
 
-def _calculate_total_tiles(opener, tile_size, num_levels):
+def _calculate_total_tiles(opener, num_levels):
     tiles = 0
     for level in range(num_levels):
-        (nx, ny) = opener.get_level_tiles(level, tile_size)
+        (nx, ny) = opener.get_level_tiles(level)
         tiles += nx * ny
 
     return tiles
@@ -45,7 +45,6 @@ def _check_duplicate(group_path, settings, old_rows):
 def render_color_tiles(
     opener,
     output_dir,
-    tile_size,
     config_rows,
     logger,
     progress_callback=None,
@@ -80,7 +79,7 @@ def render_color_tiles(
 
     num_levels = opener.get_shape()[1]
 
-    total_tiles = _calculate_total_tiles(opener, tile_size, num_levels)
+    total_tiles = _calculate_total_tiles(opener, num_levels)
     progress = 0
 
     if num_levels < 2:
@@ -96,7 +95,7 @@ def render_color_tiles(
 
     for level in range(num_levels):
 
-        (nx, ny) = opener.get_level_tiles(level, tile_size)
+        (nx, ny) = opener.get_level_tiles(level)
         print("    level {} ({} x {})".format(level, ny, nx))
 
         for ty, tx in itertools.product(range(0, ny), range(0, nx)):
@@ -114,7 +113,7 @@ def render_color_tiles(
                 if not (os.path.exists(output_file) and is_up_to_date[group_dir]):
                     try:
                         opener.save_tile(
-                            output_file, settings, tile_size, level, tx, ty
+                            output_file, settings, level, tx, ty
                         )
                     except AttributeError as e:
                         logger.error(f"{level} ty {ty} tx {tx}: {e}")

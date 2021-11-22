@@ -16,7 +16,7 @@ from render_jpg import render_color_tiles
 
 def render(opener, saved, output_dir, logger):
     config_rows = list(make_rows(saved["groups"]))
-    render_color_tiles(opener, output_dir, 1024, config_rows, logger, None, False)
+    render_color_tiles(opener, output_dir, config_rows, logger, None, False)
 
 
 def copy_vis_csv_files(waypoint_data, json_path, output_dir, vis_dir):
